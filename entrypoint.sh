@@ -15,7 +15,7 @@ while read -r project; do
     echo "--- Running checkov on $project ---"
 
     cd $GITHUB_WORKSPACE/$project
-    report=$(jq --argjson obj "$(jq -n -c --arg "project" $project --arg "report" "$(checkov -d . -o json --compact --quiet)" '$ARGS.named')" '. + [$obj]' <<< "$report")
+    report=$(jq --argjson obj "$(jq -n -c --arg "project" $project '$ARGS.named' --argjson "report" "$(checkov -d . -o json --compact --quiet)" '$ARGS.named')" '. + [$obj]' <<< "$report")
 
     echo -e "--- Finished Report on $project ---\n"
 done < <(echo $projects | tr -d "'" | jq -r '.projects[]' )
