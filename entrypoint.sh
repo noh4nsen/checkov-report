@@ -14,6 +14,10 @@ fi
 while read -r project; do
     echo "--- Running checkov on $project ---"
 
+    if [[ $project == "." ]]; then
+        continue
+    fi
+
     cd $GITHUB_WORKSPACE/$project
     report=$(jq --argjson obj "$(jq -n -c --arg "project" $project '$ARGS.named' --argjson "report" "$(checkov -d . -o json --compact --quiet)" '$ARGS.named')" '. + [$obj]' <<< "$report")
 
