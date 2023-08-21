@@ -7,7 +7,7 @@ report="[]"
 
 if [[ $projects == *null* ]]; then
     echo "--- No projects to run checkov on ---"
-    echo "checkov_report='$(echo $report)'" >> $GITHUB_OUTPUT
+    echo "checkov_report=$(echo $report)" >> $GITHUB_OUTPUT
     exit 0
 fi
 
@@ -25,4 +25,4 @@ while read -r project; do
 done < <(echo $projects | tr -d "'" | jq -r '.projects[]' )
 
 
-echo "checkov_report='$(echo $report)'" >> $GITHUB_OUTPUT
+echo "checkov_report=$(echo $report)" >> $GITHUB_OUTPUT
