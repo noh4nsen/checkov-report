@@ -25,4 +25,4 @@ while read -r project; do
 done < <(echo $projects | tr -d "'" | jq -r '.projects[]' )
 
 
-echo "checkov_report=$(echo $report)" >> $GITHUB_OUTPUT
+echo "checkov_report=$(echo -n $report | base64)" >> $GITHUB_OUTPUT
